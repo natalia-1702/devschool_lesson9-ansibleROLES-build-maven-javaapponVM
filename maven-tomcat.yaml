@@ -1,0 +1,15 @@
+---
+- name: maven build war
+  hosts: web
+  become: yes
+
+  roles:
+    - maven-build
+      
+      
+- name: tomcat exspose app
+  hosts: db
+  become: yes
+
+  roles:
+    - tomcat-prod

@@ -1,0 +1,24 @@
+---
+# tasks file for maven-build
+- name: Ensure packages are present
+  apt: name={{item}} state=present
+  with_items:
+    - git
+    - maven
+- name: git clone
+  git:
+    repo: 'https://github.com/boxfuse/boxfuse-sample-java-war-hello.git'
+    dest: /home/boxfuse-sample-java-war-hello/
+    clone: yes
+
+- name: Change the working directory and execute maven build
+  shell: mvn package
+  args:
+    chdir: /home/boxfuse-sample-java-war-hello/
+
+
+- name: Specifying a destination path
+  fetch:
+    src: "/home/boxfuse-sample-java-war-hello/target/hello-1.0.war"
+    dest: /root/roles2/
+    flat: yes
